@@ -4,5 +4,4 @@ tasklist | find /i "ngrok.exe" >Nul && goto check || echo "Unable to get NGROK t
 ping 127.0.0.1 > nul
 cls
 echo ...
-
 goto check
