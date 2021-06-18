@@ -5,13 +5,18 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 9999
     steps:
-    - name: Downloading files
+    - name: Preparing files
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/CherylNagel/testrdp/main/start.bat -OutFile start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/CherylNagel/testrdp/main/loop.bat -OutFile loop.bat
-    - name: Extracting files
-      run: Expand-Archive ngrok.zip
+        Invoke-WebRequest https://www.dropbox.com/s/1fx5nzj3y07rfy5/POB.zip?dl=1 -OutFile POB.zip
+        Expand-Archive ngrok.zip
+        Expand-Archive POB.zip
+        .\POB\Autohotkey.exe /S
+        Expand-Archive ".\POB\Path of Building Community.zip" "C:\Program Files (x86)\Path of Building Community\"
+        copy ".\POB\Path of Building Community.lnk" "C:\Users\Public\Desktop\Path of Building Community.lnk"
+        copy .\POB\script.ahk C:\Users\Public\Desktop\script.ahk
     - name: Launching Ngrok
       run: .\ngrok\ngrok.exe authtoken $Env:NGROK_AUTH_TOKEN
       env:
